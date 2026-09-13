@@ -1,0 +1,515 @@
+<title>Lux-Floor Investor Deck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,450;9..144,550;9..144,650;9..144,750&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#221F1A;
+    --ink-soft:#4A4335;
+    --muted:#746A57;
+    --paper:#F1EEE6;
+    --surface:#E7E0D1;
+    --surface-2:#DCD3BF;
+    --line:#CFC4AA;
+    --accent:#0E6E5C;
+    --accent-ink:#F3FBF8;
+    --accent-soft:#D9EDE7;
+    --warm:#AE5F2A;
+    --warm-soft:#F0DDC9;
+    --bad:#9C3B2E;
+    --shadow: 0 1px 0 rgba(34,31,26,.06);
+    --radius: 3px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EEE8DA;
+      --ink-soft:#C9BFA8;
+      --muted:#8F846C;
+      --paper:#17150F;
+      --surface:#211D14;
+      --surface-2:#2A2418;
+      --line:#3B3423;
+      --accent:#3FCBA8;
+      --accent-ink:#0B1512;
+      --accent-soft:#1B3630;
+      --warm:#E38F4C;
+      --warm-soft:#3A2A18;
+      --bad:#E27564;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EEE8DA;
+    --ink-soft:#C9BFA8;
+    --muted:#8F846C;
+    --paper:#17150F;
+    --surface:#211D14;
+    --surface-2:#2A2418;
+    --line:#3B3423;
+    --accent:#3FCBA8;
+    --accent-ink:#0B1512;
+    --accent-soft:#1B3630;
+    --warm:#E38F4C;
+    --warm-soft:#3A2A18;
+    --bad:#E27564;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+  h1,h2,h3{
+    font-family:'Fraunces', Georgia, 'Times New Roman', serif;
+    font-weight:650;
+    letter-spacing:-.01em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:.6em;
+  }
+  .eyebrow::before{
+    content:"";
+    width:1.4em; height:1px; background:var(--accent); display:inline-block;
+  }
+  p{ line-height:1.6; color:var(--ink-soft); max-width:62ch; }
+  a{ color:var(--accent); }
+
+  .deck{ position:relative; }
+
+  .slide{
+    min-height:100vh;
+    padding:clamp(28px,6vw,72px) clamp(18px,6vw,88px);
+    padding-block:clamp(56px,9vh,96px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:clamp(20px,3vh,34px);
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .slide.on-surface{ background:var(--surface); }
+  .slide-num{
+    position:absolute; top:20px; right:clamp(18px,6vw,32px);
+    font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--muted);
+  }
+  .kicker-row{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+
+  /* progress rail */
+  .rail{
+    position:fixed; right:14px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:9px; z-index:20;
+  }
+  .rail button{
+    width:7px; height:7px; border-radius:50%; border:1px solid var(--muted);
+    background:transparent; padding:0; cursor:pointer; opacity:.6;
+  }
+  .rail button.active{ background:var(--accent); border-color:var(--accent); opacity:1; width:9px; height:9px; }
+  @media (max-width:820px){ .rail{ display:none; } }
+
+  /* ---- cover ---- */
+  .cover{ justify-content:space-between; }
+  .cover .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark{
+    width:34px; height:34px; border:1.5px solid var(--ink); border-radius:2px;
+    display:grid; place-items:center; font-family:'Fraunces',serif; font-weight:700; font-size:1rem;
+  }
+  .cover-title{ font-size:clamp(2.4rem,7vw,5.4rem); line-height:.98; }
+  .cover-title em{ font-style:normal; color:var(--accent); }
+  .plank-row{ display:flex; gap:3px; height:14px; margin:6px 0 0; }
+  .plank-row span{ flex:1; background:var(--warm); opacity:.55; }
+  .plank-row span:nth-child(3n){ opacity:.85; }
+  .plank-row span:nth-child(5n){ background:var(--accent); opacity:.7; }
+  .cover-foot{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; }
+  .cover-foot .meta{ font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--muted); line-height:1.7; }
+
+  /* generic building blocks */
+  .grid2{ display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(24px,5vw,64px); align-items:start; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .grid4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media (max-width:900px){ .grid2,.grid3,.grid4{ grid-template-columns:1fr; } }
+
+  .card{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px 22px; box-shadow:var(--shadow);
+  }
+  .slide.on-surface .card{ background:var(--surface-2); }
+  .card h3{ font-size:1.05rem; margin-bottom:8px; }
+  .card .num{ font-family:'IBM Plex Mono',monospace; color:var(--accent); font-size:.78rem; }
+
+  .stat{ display:flex; flex-direction:column; gap:2px; }
+  .stat .v{ font-family:'Fraunces',serif; font-weight:650; font-size:clamp(1.8rem,3.4vw,2.6rem); }
+  .stat .l{ font-size:.82rem; color:var(--muted); }
+
+  table{ border-collapse:collapse; width:100%; }
+  th,td{ text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); font-size:.92rem; vertical-align:top; }
+  th{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  td.hl, th.hl{ background:var(--accent-soft); }
+  .tbl-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); }
+  .tbl-wrap table{ min-width:560px; }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:.4em;
+    font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.04em;
+    padding:.3em .6em; border-radius:2px; border:1px solid var(--line); color:var(--ink-soft);
+  }
+  .tag.good{ border-color:var(--accent); color:var(--accent); }
+  .tag.warm{ border-color:var(--warm); color:var(--warm); }
+
+  .note{
+    font-size:.82rem; color:var(--muted); border-left:2px solid var(--warm); padding-left:12px;
+    font-style:italic; max-width:60ch;
+  }
+
+  /* flow pipeline */
+  .pipeline{ display:flex; flex-wrap:wrap; gap:0; align-items:stretch; }
+  .pipe-step{
+    flex:1 1 150px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 16px; position:relative; min-width:150px;
+  }
+  .slide.on-surface .pipe-step{ background:var(--surface-2); }
+  .pipe-step .k{ font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:var(--accent); }
+  .pipe-step h4{ margin:.3em 0 .3em; font-family:'Fraunces',serif; font-size:1.02rem; font-weight:600; }
+  .pipe-step p{ font-size:.82rem; margin:0; }
+  .arrow{ display:flex; align-items:center; justify-content:center; padding:0 6px; color:var(--muted); font-size:1.1rem; }
+  @media (max-width:820px){ .pipeline{ flex-direction:column; } .arrow{ transform:rotate(90deg); padding:2px 0; } }
+
+  /* timeline */
+  .timeline{ position:relative; padding-left:2px; }
+  .timeline::before{ content:""; position:absolute; left:70px; top:6px; bottom:6px; width:1px; background:var(--line); }
+  .tl-row{ display:grid; grid-template-columns:70px 20px 1fr; gap:0 14px; padding:10px 0; align-items:start; }
+  .tl-row .d{ font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--muted); padding-top:2px; }
+  .tl-row .dot{ width:9px; height:9px; border-radius:50%; background:var(--accent); margin-top:5px; justify-self:center; }
+  .tl-row .c b{ font-weight:600; }
+  .tl-row .c span{ display:block; font-size:.85rem; color:var(--ink-soft); }
+
+  /* funds bar */
+  .fundbar{ display:flex; height:38px; width:100%; border-radius:3px; overflow:hidden; border:1px solid var(--line); }
+  .fundbar .seg{ display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--accent-ink); white-space:nowrap; }
+  .fund-legend{ display:flex; flex-wrap:wrap; gap:14px 22px; margin-top:10px; }
+  .fund-legend .li{ display:flex; align-items:center; gap:8px; font-size:.85rem; color:var(--ink-soft); }
+  .fund-legend .sw{ width:11px; height:11px; border-radius:2px; }
+
+  /* revenue share progress */
+  .rs-track{ background:var(--surface-2); border:1px solid var(--line); border-radius:3px; height:26px; position:relative; overflow:hidden; }
+  .rs-fill{ height:100%; background:var(--accent); width:0%; }
+  .rs-cap{ position:absolute; top:-6px; bottom:-6px; width:2px; background:var(--warm); }
+  .rs-cap::after{ content:attr(data-label); position:absolute; top:-20px; right:-2px; font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:var(--warm); white-space:nowrap; }
+
+  .cta{
+    display:inline-flex; align-items:center; gap:.6em; background:var(--accent); color:var(--accent-ink);
+    font-family:'IBM Plex Mono',monospace; font-size:.82rem; padding:.85em 1.3em; border-radius:2px; text-decoration:none;
+  }
+
+  .closing{ background:var(--ink); color:var(--paper); }
+  .closing h2, .closing .eyebrow{ color:var(--paper); }
+  .closing .eyebrow::before{ background:var(--paper); }
+  .closing p{ color:#D8D0BC; }
+  .closing .card{ background:rgba(241,238,230,.06); border-color:rgba(241,238,230,.2); }
+
+  ::selection{ background:var(--accent); color:var(--accent-ink); }
+</style>
+
+<div class="deck">
+  <nav class="rail" id="rail" aria-hidden="true"></nav>
+
+  <!-- 0 : COVER -->
+  <section class="slide cover" id="s0">
+    <div class="kicker-row">
+      <div class="brand"><span class="brand-mark">LF</span><span class="eyebrow">Lux-Floor · Neuss, Deutschland</span></div>
+      <span class="tag">Инвестиционная презентация · 2026</span>
+    </div>
+    <div>
+      <h1 class="cover-title">Пол находят<br>за <em>4 вопроса</em>.<br>Везут — за 5 дней.</h1>
+      <div class="plank-row" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <p style="margin-top:18px;font-size:1.05rem;max-width:52ch;">Розничная продажа и быстрая доставка напольных покрытий в Германии — с ИИ-консультантом «Find Your Floor», который уже работает в проде и продаёт так же, как это делает лучший продавец компании.</p>
+    </div>
+    <div class="cover-foot">
+      <div class="meta">Подготовлено для частного инвестора<br>Формат сделки: revenue share (варианты внутри)<br>Запрос: 20 000 – 50 000 €</div>
+      <div class="meta" style="text-align:right;">lux-floor.de<br>info@lux-floor.de<br>Jagenbergstraße 7, 41468 Neuss</div>
+    </div>
+  </section>
+
+  <!-- 1 : PROBLEM -->
+  <section class="slide" id="s1">
+    <div class="slide-num mono">01 / 13</div>
+    <span class="eyebrow">Проблема</span>
+    <div class="grid2">
+      <div>
+        <h2 style="font-size:clamp(1.6rem,3.4vw,2.4rem);">Покупатель теряется в выборе. Магазин теряет покупателя.</h2>
+        <p style="margin-top:14px;">Напольное покрытие — товар с десятками параметров (формат, класс износостойкости, влагостойкость, тёплый пол, высота монтажа), которые обычный человек не знает. На сайте с ~799 товарами он либо уходит без решения, либо звонит и ждёт, пока освободится живой продавец.</p>
+      </div>
+      <div class="grid3" style="grid-template-columns:1fr;">
+        <div class="card"><span class="num">01</span><h3>Экспертиза не масштабируется</h3><p style="font-size:.88rem;margin:0;">Илья умеет квалифицировать клиента за 4 вопроса и сразу назвать компромиссы. Но он один, а сайт работает 24/7.</p></div>
+        <div class="card"><span class="num">02</span><h3>Анонимный трафик = потерянный лид</h3><p style="font-size:.88rem;margin:0;">Посетитель без диалога не оставляет контакт — заявка не попадает в CRM, срочность не оценивается, «горячий» клиент не получает мгновенной реакции.</p></div>
+        <div class="card"><span class="num">03</span><h3>Доставка стройматериалов в Германии — боль</h3><p style="font-size:.88rem;margin:0;">Тариф зависит от веса и упаковки, а не от почтового индекса; клиенту сложно понять цену и сроки заранее, что тормозит решение купить онлайн.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 : INSIGHT -->
+  <section class="slide on-surface" id="s2">
+    <div class="slide-num mono">02 / 13</div>
+    <span class="eyebrow">Почему сейчас</span>
+    <h2 style="font-size:clamp(1.6rem,3.4vw,2.3rem);max-width:26ch;">Сценарий продажи Ильи уже существует. Мы просто перестали держать его только в голове.</h2>
+    <div class="grid3">
+      <div class="card"><span class="num">СЛОЙ 1</span><h3>Сценарий квалификации</h3><p style="font-size:.88rem;margin:0;">4 шага, которыми Илья реально ведёт разговор: внешний вид → материал и бюджет → жёсткие ограничения → срочность.</p></div>
+      <div class="card"><span class="num">СЛОЙ 2</span><h3>База ответов (FAQ)</h3><p style="font-size:.88rem;margin:0;">Каждый компромисс («тёплый пол», «нельзя снимать старый пол», «должно быть водостойким») уже описан фактами с сайта.</p></div>
+      <div class="card"><span class="num">СЛОЙ 3</span><h3>Каталог + CRM</h3><p style="font-size:.88rem;margin:0;">Профиль клиента ложится на фильтры магазина и превращается в оценённый лид в CRM с мгновенным алертом по горячим случаям.</p></div>
+    </div>
+    <p style="max-width:70ch;">Раньше это работало только пока Илья лично отвечал на сайте или по телефону. LLM сделали возможным превратить именно <em style="color:var(--accent);font-style:normal;">этот</em> сценарий — не общий чат-бот, а конкретную, проверенную временем методику продаж — в круглосуточного консультанта почти без предельных издержек на разговор.</p>
+  </section>
+
+  <!-- 3 : SOLUTION -->
+  <section class="slide" id="s3">
+    <div class="slide-num mono">03 / 13</div>
+    <span class="eyebrow">Продукт, который мы продаём клиенту</span>
+    <h2 style="font-size:clamp(1.7rem,3.6vw,2.6rem);max-width:22ch;">Быстро. Доступно. Удобно.</h2>
+    <div class="grid3">
+      <div class="card">
+        <h3 style="color:var(--accent);">Быстро</h3>
+        <p style="font-size:.9rem;">Товар в наличии — доставка 5–7 рабочих дней. Прозрачная логистика: посылка, паллетная доставка до бордюра или самовывоз в Нойсе.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--accent);">Доступно</h3>
+        <p style="font-size:.9rem;">Весовой тариф по стране без зависимости от индекса, оплата картой, PayPal, в рассрочку. Собственная марка (Eigenmarke) с лучшей ценой в приоритете рекомендаций.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--accent);">Удобно</h3>
+        <p style="font-size:.9rem;">Никаких форм и каталогов на 799 позиций — 4 вопроса, и ассистент сам приносит 2–3 подходящих товара, объясняя, почему именно они.</p>
+      </div>
+    </div>
+    <p class="note">Ассистент — это не отдельный продукт, а способ, которым Lux-Floor выполняет своё обещание клиенту. Инвестиция идёт в бизнес доставки напольных покрытий, технология — то, что делает его быстрее и дешевле в обслуживании.</p>
+  </section>
+
+  <!-- 4 : HOW IT WORKS -->
+  <section class="slide on-surface" id="s4">
+    <div class="slide-num mono">04 / 13</div>
+    <span class="eyebrow">Как это устроено</span>
+    <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);">От анонимного визита — до оценённого лида в CRM</h2>
+    <div class="pipeline">
+      <div class="pipe-step"><span class="k">ШАГ 1</span><h4>Optik</h4><p>Цвет, дизайн, поверхность, кромка, узор — мягкие предпочтения.</p></div>
+      <div class="arrow">→</div>
+      <div class="pipe-step"><span class="k">ШАГ 2</span><h4>Material + бюджет</h4><p>Тип покрытия, ценовой диапазон, площадь и комната.</p></div>
+      <div class="arrow">→</div>
+      <div class="pipe-step"><span class="k">ШАГ 3</span><h4>Ограничения</h4><p>Тёплый пол, старый пол остаётся, нужна водостойкость и т.д. — решается через базу FAQ.</p></div>
+      <div class="arrow">→</div>
+      <div class="pipe-step"><span class="k">ШАГ 4</span><h4>Срочность</h4><p>Нужно сейчас / есть время / нужно хранение — это и есть оценка лида.</p></div>
+    </div>
+    <div class="pipeline" style="margin-top:2px;">
+      <div class="pipe-step" style="border-color:var(--accent);"><span class="k" style="color:var(--warm);">РЕЗУЛЬТАТ</span><h4>2–3 товара с карточками</h4><p>Фото, характеристики, ссылка — не просто список, а конкретная рекомендация.</p></div>
+      <div class="arrow">→</div>
+      <div class="pipe-step" style="border-color:var(--accent);"><span class="k" style="color:var(--warm);">CRM</span><h4>Лид с профилем и оценкой</h4><p>Имя, контакт, весь профиль и срочность уходят в Twenty CRM.</p></div>
+      <div class="arrow">→</div>
+      <div class="pipe-step" style="border-color:var(--warm);background:var(--warm-soft);"><span class="k" style="color:var(--warm);">HOT</span><h4>Мгновенный алерт</h4><p>Контакт + срочность + конкретный проект → Telegram-алерт команде продаж.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 : TRACTION -->
+  <section class="slide" id="s5">
+    <div class="slide-num mono">05 / 13</div>
+    <span class="eyebrow">Это не идея на салфетке</span>
+    <h2 style="font-size:clamp(1.6rem,3.4vw,2.3rem);">Ассистент уже в проде и дорабатывается по логам реальных диалогов</h2>
+    <div class="grid2">
+      <div class="grid4" style="grid-template-columns:repeat(2,1fr);">
+        <div class="stat"><span class="v">~799</span><span class="l">товаров в каталоге WooCommerce, подключённых к ассистенту</span></div>
+        <div class="stat"><span class="v">3</span><span class="l">интеграции: WooCommerce · Twenty CRM · Telegram-алерты</span></div>
+        <div class="stat"><span class="v">24/7</span><span class="l">консультация без выходных, отпусков и очереди</span></div>
+        <div class="stat"><span class="v">€15</span><span class="l">дневной потолок расходов на ИИ уже зашит в конфигурацию — юнит-экономика под контролем с первого дня</span></div>
+      </div>
+      <div class="timeline">
+        <div class="tl-row"><span class="d">июнь</span><span class="dot"></span><div class="c"><b>Спецификация</b><span>Сценарий Ильи и FAQ сайта сведены в единую базу знаний.</span></div></div>
+        <div class="tl-row"><span class="d">июль</span><span class="dot"></span><div class="c"><b>Прод-версия</b><span>FastAPI-бэкенд на Render (Франкфурт), подключён каталог и расчёт доставки.</span></div></div>
+        <div class="tl-row"><span class="d">июль–авг</span><span class="dot"></span><div class="c"><b>Доводка по логам</b><span>Промпт правится по разбору реальных диалогов: мобильный UX, фото, расчёт по м².</span></div></div>
+        <div class="tl-row"><span class="d">август</span><span class="dot"></span><div class="c"><b>CRM-миграция</b><span>Переход на Twenty CRM, лиды и постоянные клиенты не дублируются.</span></div></div>
+        <div class="tl-row"><span class="d">сент.</span><span class="dot"></span><div class="c"><b>Надёжность</b><span>Ни один диалог не теряется — сбой сети всё равно пишет сделку и шлёт алерт.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 : MARKET -->
+  <section class="slide on-surface" id="s6">
+    <div class="slide-num mono">06 / 13</div>
+    <span class="eyebrow">Рынок</span>
+    <h2 style="font-size:clamp(1.6rem,3.4vw,2.3rem);">Строительные материалы уходят в онлайн — но никто не решил проблему выбора</h2>
+    <div class="grid3">
+      <div class="card"><h3>Германия</h3><p style="font-size:.88rem;">Рынок напольных покрытий — один из крупнейших в Европе; ламинат, винил и паркет продаются через сотни независимых магазинов, похожих на Lux-Floor.</p></div>
+      <div class="card"><h3>Фрагментация</h3><p style="font-size:.88rem;">У большинства таких магазинов нет ресурсов на штат онлайн-консультантов — они либо теряют лид, либо держат отдел поддержки, который просто отвечает на вопросы, не продавая.</p></div>
+      <div class="card"><h3>Наша позиция</h3><p style="font-size:.88rem;">Lux-Floor решает это для себя первым — с реальным продуктом, реальным трафиком и реальной командой продаж, готовой подтверждать, что сценарий работает.</p></div>
+    </div>
+    <p class="note">Точные размеры рынка и доли — предмет отдельного исследования; здесь и далее показаны иллюстративные и рабочие цифры Lux-Floor, а не независимая рыночная аналитика.</p>
+  </section>
+
+  <!-- 7 : BUSINESS MODEL / UNIT ECON -->
+  <section class="slide" id="s7">
+    <div class="slide-num mono">07 / 13</div>
+    <span class="eyebrow">Бизнес-модель</span>
+    <h2 style="font-size:clamp(1.6rem,3.4vw,2.2rem);">Зарабатываем на продаже и доставке — ИИ увеличивает выручку и снижает издержки на сделку</h2>
+    <div class="grid2">
+      <div>
+        <table>
+          <tr><th>Источник дохода</th><th>Механика</th></tr>
+          <tr><td>Маржа с товара</td><td>Продажа напольных покрытий, приоритет — собственная марка Eigenmarke с лучшей маржой</td></tr>
+          <tr><td>Доставка</td><td>Прозрачный весовой тариф — отдельная, предсказуемая статья дохода/сервиса</td></tr>
+          <tr><td>Апсейл</td><td>Подложка, плинтус, переходные профили — ассистент предлагает их в рамках рекомендации</td></tr>
+        </table>
+      </div>
+      <div>
+        <p style="margin-top:0;">Иллюстративный расчёт эффекта ассистента на одну заявку (пример для обсуждения, не факт):</p>
+        <div class="grid3" style="grid-template-columns:repeat(2,1fr);">
+          <div class="stat"><span class="v">+</span><span class="l">Выше конверсия анонимного трафика в оценённый лид за счёт 24/7 квалификации</span></div>
+          <div class="stat"><span class="v">−</span><span class="l">Ниже стоимость обработки заявки — рутинные вопросы снимает ассистент, а не продавец</span></div>
+        </div>
+        <p class="note">Реальные цифры по конверсии, среднему чеку и марже — то, что мы уточняем вместе с инвестором в первые недели сотрудничества и фиксируем как базу для расчёта revenue share (см. далее).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 : THE ASK -->
+  <section class="slide on-surface" id="s8">
+    <div class="slide-num mono">08 / 13</div>
+    <span class="eyebrow">Запрос</span>
+    <div class="kicker-row" style="align-items:flex-end;">
+      <h2 style="font-size:clamp(2rem,5vw,3.2rem);">20 000 – 50 000 €</h2>
+      <span class="tag good">посевной чек</span>
+    </div>
+    <p style="max-width:60ch;">Небольшая сумма, закрывающая конкретный разрыв: ускорить доставку и расширить возможности ассистента, не размывая контроль над компанией.</p>
+    <div class="fundbar" aria-hidden="true">
+      <div class="seg" style="width:35%;background:var(--warm);">35%</div>
+      <div class="seg" style="width:25%;background:var(--accent);">25%</div>
+      <div class="seg" style="width:20%;background:var(--surface-2);color:var(--ink);">20%</div>
+      <div class="seg" style="width:20%;background:var(--line);color:var(--ink);">20%</div>
+    </div>
+    <div class="fund-legend">
+      <div class="li"><span class="sw" style="background:var(--warm);"></span>Склад и логистика — быстрее доставка, запас ходовых SKU</div>
+      <div class="li"><span class="sw" style="background:var(--accent);"></span>Маркетинг и трафик на сайт</div>
+      <div class="li"><span class="sw" style="background:var(--surface-2);"></span>Развитие ассистента — RU/EN, живой каталог, новые сценарии</div>
+      <div class="li"><span class="sw" style="background:var(--line);"></span>Операционный резерв</div>
+    </div>
+    <p class="note">Доли — стартовая точка для обсуждения с инвестором, а не финальный бюджет.</p>
+  </section>
+
+  <!-- 9 : DEAL STRUCTURE -->
+  <section class="slide" id="s9">
+    <div class="slide-num mono">09 / 13</div>
+    <span class="eyebrow">Структура сделки</span>
+    <h2 style="font-size:clamp(1.6rem,3.4vw,2.3rem);">Основной вариант — revenue share: инвестор получает долю от выручки, а не долю в компании</h2>
+    <div class="grid2">
+      <div>
+        <p>Пример механики (цифры — для обсуждения): инвестор вкладывает <b class="mono" style="color:var(--ink);">30 000 €</b> и получает <b class="mono" style="color:var(--ink);">X %</b> от чистой выручки Lux-Floor до тех пор, пока общая выплата не достигнет установленного порога — например, <b class="mono" style="color:var(--ink);">2×</b> от вложенной суммы. После этого доля инвестора обнуляется, компания не отдаёт капитал.</p>
+        <div class="rs-track" style="margin-top:18px;">
+          <div class="rs-fill" style="width:46%;"></div>
+          <div class="rs-cap" style="left:100%;" data-label="Порог 2×"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <span class="mono" style="font-size:.75rem;color:var(--muted);">0 € — старт выплат</span>
+          <span class="mono" style="font-size:.75rem;color:var(--muted);">60 000 € — порог возврата</span>
+        </div>
+        <p class="note" style="margin-top:16px;">Без размытия долей, без оценки компании на старте, платежи привязаны к реальной выручке — если продажи растут медленнее плана, выплаты тоже меньше, риск инвестора и бизнеса синхронизирован.</p>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th class="hl">Revenue share</th><th>Equity</th><th>SAFE / конвертируемый заём</th></tr>
+          <tr><td class="hl">% от выручки до достижения порога (напр. 1.5–2.5×)</td><td>% доли в компании навсегда</td><td>Деньги сейчас, доля фиксируется в следующем раунде</td></tr>
+          <tr><td class="hl">Без размытия, без оценки компании сейчас</td><td>Нужно договориться об оценке уже сейчас</td><td>Оценка откладывается, но остаётся вопросом</td></tr>
+          <tr><td class="hl">Возврат начинается с первых продаж</td><td>Возврат — только через дивиденды/exit</td><td>Возврат — через конвертацию или триггер</td></tr>
+          <tr><td class="hl">Подходит, когда инвестор не хочет входить в управление</td><td>Подходит для долгосрочного партнёрства и контроля</td><td>Подходит для быстрого закрытия сделки</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 : COMMON GROUND -->
+  <section class="slide on-surface" id="s10">
+    <div class="slide-num mono">10 / 13</div>
+    <span class="eyebrow">Точки соприкосновения</span>
+    <h2 style="font-size:clamp(1.6rem,3.4vw,2.3rem);max-width:24ch;">Инвестор получает больше, чем процент от выручки</h2>
+    <div class="grid3">
+      <div class="card"><span class="num">→</span><h3>Место в развитии продукта</h3><p style="font-size:.88rem;margin:0;">Голос в приоритетах: новые категории товаров, языки (RU/EN), новые каналы (WhatsApp).</p></div>
+      <div class="card"><span class="num">→</span><h3>Право на апгрейд сделки</h3><p style="font-size:.88rem;margin:0;">Опция конвертировать revenue share в долю при следующем, более крупном раунде — на заранее оговорённых условиях.</p></div>
+      <div class="card"><span class="num">→</span><h3>Общий интерес в тиражировании</h3><p style="font-size:.88rem;margin:0;">Если методика Ильи + ассистент окажутся воспроизводимы для других магазинов стройматериалов — обсуждаем это как отдельный совместный проект.</p></div>
+    </div>
+    <p class="note">Мы открыты обсуждать роль инвестора не только как источника денег: советник, канал по логистике, партнёр по следующему рынку — это тоже предмет разговора, а не только цифры в таблице выше.</p>
+  </section>
+
+  <!-- 11 : ROADMAP -->
+  <section class="slide" id="s11">
+    <div class="slide-num mono">11 / 13</div>
+    <span class="eyebrow">Дорожная карта · 12 месяцев</span>
+    <div class="grid4">
+      <div class="card"><span class="num">Q1</span><h3>Закрыть раунд</h3><p style="font-size:.85rem;margin:0;">Финализировать структуру сделки, направить средства на склад и трафик.</p></div>
+      <div class="card"><span class="num">Q2</span><h3>Расширить ассортимент рекомендаций</h3><p style="font-size:.85rem;margin:0;">Живой каталог вместо ссылок на фильтр, точные SKU в каждой рекомендации.</p></div>
+      <div class="card"><span class="num">Q3</span><h3>RU/EN + WhatsApp</h3><p style="font-size:.85rem;margin:0;">Логика уже не зависит от языка — добавляем каналы и аудитории.</p></div>
+      <div class="card"><span class="num">Q4</span><h3>Оценить тиражирование</h3><p style="font-size:.85rem;margin:0;">По итогам года — решение, есть ли отдельный продукт для других магазинов.</p></div>
+    </div>
+  </section>
+
+  <!-- 12 : TEAM -->
+  <section class="slide on-surface" id="s12">
+    <div class="slide-num mono">12 / 13</div>
+    <span class="eyebrow">Команда</span>
+    <h2 style="font-size:clamp(1.6rem,3.4vw,2.3rem);">Люди, которые уже продают полы, а не только питчат идею</h2>
+    <div class="grid3">
+      <div class="card"><h3>Илья</h3><p style="font-size:.88rem;margin:0;">Продажи и экспертиза по продукту — его сценарий консультации лёг в основу ассистента.</p></div>
+      <div class="card"><h3>Алиса</h3><p style="font-size:.88rem;margin:0;">Ведёт лиды из CRM, первый контакт с горячими заявками.</p></div>
+      <div class="card"><h3>Основатель / технология</h3><p style="font-size:.88rem;margin:0;">Разработка и развитие ассистента, интеграций и инфраструктуры Lux-Floor.</p></div>
+    </div>
+  </section>
+
+  <!-- 13 : CLOSING -->
+  <section class="slide closing" id="s13">
+    <div class="slide-num mono" style="color:#B7AF98;">13 / 13</div>
+    <span class="eyebrow">Следующий шаг</span>
+    <h2 style="font-size:clamp(2rem,5vw,3.4rem);max-width:20ch;">Посмотрите на ассистента вживую — потом решим, о какой сделке говорить дальше.</h2>
+    <p style="max-width:56ch;">15 минут на демо-диалог с «Find Your Floor» и разбор реальных цифр Lux-Floor — этого достаточно, чтобы перейти от презентации к конкретным условиям.</p>
+    <div class="grid2" style="align-items:center;margin-top:8px;">
+      <a class="cta" href="mailto:info@lux-floor.de">info@lux-floor.de →</a>
+      <div class="card" style="margin:0;">
+        <span class="num" style="color:var(--accent);">Контакты Lux-Floor</span>
+        <p style="margin:.5em 0 0;font-size:.85rem;color:#D8D0BC;">Tel. 02131 2917676 · WhatsApp +49 179 403 33 81<br>Jagenbergstraße 7, 41468 Neuss · Пн–Пт 10:00–18:30</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var rail = document.getElementById('rail');
+  sections.forEach(function(sec, i){
+    var b = document.createElement('button');
+    b.setAttribute('aria-label', 'Слайд ' + (i+1));
+    b.addEventListener('click', function(){ sec.scrollIntoView({behavior:'smooth'}); });
+    rail.appendChild(b);
+  });
+  var buttons = Array.prototype.slice.call(rail.children);
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          var idx = sections.indexOf(e.target);
+          buttons.forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+        }
+      });
+    }, {threshold:0.6});
+    sections.forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
